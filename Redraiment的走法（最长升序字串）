@@ -2,14 +2,15 @@
 # 最长上升子序列
 while True:
     try:
-        n = int(input())
-        line = map(int, input().split())
-        maxstep = [1]
+        n = input()
+        line = list(map(int,input().split()))
+        maxStep = [1]
         for i in range(1, len(line)):
             res = 1
             for j in range(0, i):
                 if line[j] < line[i]:
-                    maxstep = max(maxstep[j] + 1, res)
-        print(max(maxstep))
+                    res = max(maxStep[j]+1, res)
+            maxStep.append(res)
+        print(max(maxStep))
     except:
         break
