@@ -1,0 +1,22 @@
+思路：
+  令(m,n)表示将m个苹果放入n个盘子中的摆放方法总数。
+  分成两种情况讨论：
+  1.允许有盘子空着：这种可能情况为（m,n-1),即将m个苹果放在n-1个盘子上。
+  2.所有盘子上都有苹果：这种情况为（m-n,n),即将m-n个苹果放在n个盘子上。
+  终止条件：m = 1 or n = 1
+  
+代码：
+  # 分两种情况：有空的和没空的
+  def count(m,n):
+      if m < 0:
+          return 0
+      if m == 1 or n == 1:
+          return 1
+      else:
+          return count(m, n - 1) + count(m - n, n)
+  while True:
+      try:
+          m, n = list(map(int, input().split()))
+          print(count(m,n))
+      except:
+          break
