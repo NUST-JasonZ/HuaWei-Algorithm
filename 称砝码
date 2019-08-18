@@ -1,0 +1,28 @@
+思路：使用set(),构建一个临时集合temp，和一个结果集合result。不断暴力循环，从第一种砝码开始，依次增加重要add入result中，
+      遍历完第一种砝码后，把result.copy()赋给temp，再进行第二种砝码的重量迭代...
+
+代码：
+  while True:
+    try:
+        n = int(input())
+        m = list(map(int, input().split()))
+        s = list(map(int, input().split()))
+        result = set()
+        result.add(0)  # 有零初始化
+        temp = set()
+        temp.add(0)
+        for i in range(n):
+            for j in range(1, s[i]+1):
+                for k in temp:
+                    result.add(m[i] * j + k)
+            temp = result.copy()  # 使用集合拷贝，不能直接赋值
+        print(len(result))
+    except:
+        break
+
+集合相关知识：
+  集合（set）是一个无序的不重复元素序列。可以使用大括号 { } 或者 set() 函数创建集合，注意：创建一个空集合必须用 set() 而不是 { }
+  1.添加操作：s.add( x )
+  2.移除操作：s.remove( x )如果元素不存在，则会发生错误
+             s.discard( x )如果元素不存在，不会发生错误
+  3.拷贝集合：.copy()
