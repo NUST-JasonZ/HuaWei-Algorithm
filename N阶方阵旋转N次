@@ -34,7 +34,7 @@ N行，每行N个整数，用空格分开，为旋转后的数据
 """
 
 
-思路：顺时针旋转，相当于先进行做对角线的反转，再上下对换位置。
+思路：顺时针旋转，相当于先进行做对角线的反转，再上下对换位置。同时，每4次是一组旋转方式。
    即：1 2 3       9 6 3          7 4 1
        4 5 6  -》  8 5 2  -》     8 5 2
        7 8 9       7 4 1          9 6 3
@@ -55,7 +55,7 @@ while True:
         n = int(input())
         for i in range(n):
             mat = fanzhuan(mat)
-        for i in range(m):
+        for i in range(m % 4):
             print(' '.join(map(str, mat[i])))
     except:
         break
