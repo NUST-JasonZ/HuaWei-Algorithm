@@ -1,0 +1,68 @@
+描述：
+2  # T组测试数据i
+10 5 2  # 成员个数 用户编号i n度好友
+13 0 3 5 0 4 9 0 6 8 0 7 5 1 2 6 1 6 3 2 9 7 3 4 3 3 5 3 3 8 3 3 9 3 5 8 9 7 8 9  # 13：13组 0 3 5：用户0和用户3的好感度为5,...每三个为一组
+10 0 2
+13 0 3 5 0 4 9 0 6 8 0 7 5 1 2 6 1 6 3 2 9 7 3 4 3 3 5 3 3 8 3 3 9 3 5 8 9 7 8 9
+输出：
+  用户编号i的n度好友，并按推荐值降序排列
+
+代码：
+import heapq
+while True:
+    try:
+        n = int(input())
+        for _ in range(n):
+            m, s, n = list(map(int, input().split()))
+            string = list(map(int, input().split()))
+            t = string[0]
+            strt = string[1:]
+            dict_t = {}
+            for i in range(t):
+                a = strt[i*3]
+                b = strt[i*3 + 1]
+                c = strt[i*3 + 2]
+                if a not in dict_t:
+                    dict_t[a] = {}
+                    if b not in dict_t[a]:
+                        dict_t[a][b] = c
+                else:
+                    dict_t[a][b] = c
+                if b not in dict_t:
+                    dict_t[b] = {}
+                    if a not in dict_t[b]:
+                        dict_t[b][a] = c
+                else:
+                    dict_t[b][a] = c  # 把数据编程字典
+            seen = set()  # 创建集合查看元素是否已经被访问
+            seen.add(s)
+            queue = []
+            heapq.heappush(queue, (0, s))  # 优先队列，依次插入
+            
+            i = 0
+            while len(queue) > 0 and i != n:  # 只要queue不为空并且i不是第n层，bfs
+                queue1 = []  # 用于存放queue出队后遍历的元素
+                while len(queue) > 0:  # queue中元素都出队
+                    pair = heapq.heappop(queue)
+                    dist = pair[0]
+                    vertex = pair[1]
+                    nodes = dict_t[vertex].keys()
+                    for w in nodes:
+                        if w not in seen:
+                            heapq.heappush(queue1, (dist + dict_t[vertex][w], w))
+                            seen.add(w)
+                    if len(queue) == 0:
+                        i += 1
+                for _ in range(len(queue1)):  # 把queue1队列中元素都放入queue中
+                    heapq.heappush(queue,heapq.heappop(queue1))
+
+            if i != n: # bfs深度没有n
+                print(-1)
+            else:  # 排序输出
+                queue = sorted(queue, key = lambda x: x[0], reverse = True)
+                result = ''
+                for j in queue:
+                    result += str(j[1])
+                print(' '.join(result))
+    except:
+        break
