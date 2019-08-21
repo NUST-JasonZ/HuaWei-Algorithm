@@ -1,0 +1,26 @@
+思路：第一遍遍历有交集关系的群组，无交集关系的群组进行第二次遍历...直至再也没有交集关系的群组
+代码：
+while True:
+    try:
+        one = input()
+        n = int(input())
+        group = []  # 存放群组成员
+        for i in range(n):
+            group.append(input().split(','))
+        res = {one}  # 发送者放入
+        while True:
+            Flag = False  # 与发送者无交集
+            group1 = []  # 存放没有交集的群组
+            for i in range(len(group)):  # 第一次遍历有交集关系的群组
+                if set(group[i]).intersection(set(res)):  # 有交集
+                    Flag = True  # 有交集flag
+                    res = set(group[i]).union(set(res))  # 把所有并集放入res中
+                else:  # 无交集群组放入group1中
+                    group1.append(group[i])
+            group = group1  # 把第一次没有交集关系的数组重新赋给group，进行下一次的交集遍历
+            if not Flag:  # 无交集关系
+                break
+        print(len(res))
+    except:
+        break
+  
