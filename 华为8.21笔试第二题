@@ -1,0 +1,26 @@
+思路：
+  质数的判断，从2遍历到int(i ** 0.5)，是最快的方法。
+代码：
+  while True:
+      try:
+          string = input().split()
+          result = []
+          for i in range(int(string[0]), int(string[1])):
+              flag = True  # 是质数
+              for j in range(2, int(i ** 0.5) + 1):  # 质数只需要遍历到int(i ** 0.5) + 1
+                  if i % j == 0:
+                      flag = False  # 不是质数
+                      break
+              if flag:
+                  result.append(i)
+          if not result:
+              print(0)
+          else:
+              s = 0
+              g = 0
+              for i in result:
+                  g += i % 10
+                  s += (i % 100) // 10
+              print(min(g, s))
+      except:
+          break
